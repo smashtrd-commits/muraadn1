@@ -1,0 +1,47 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    match /users/{userId} {
+      allow get, update, create: if isOwner(userId) && isValidId(userId);
+      allow delete: if false;
+
+      match /accounts/{accountId} {
+        allow read, write: if isOwner(userId) && isValidId(accountId);
+      }
+
+      match /trades/{tradeId} {
+        allow read, write: if isOwner(userId) && isValidId(tradeId);
+      }
+
+      match /transactions/{transactionId} {
+        allow read, write: if isOwner(userId) && isValidId(transactionId);
+      }
+
+      match /marketNotes/{noteId} {
+        allow read, write: if isOwner(userId) && isValidId(noteId);
+      }
+
+      match /todos/{todoId} {
+        allow read, write: if isOwner(userId) && isValidId(todoId);
+      }
+    }
+  }
+}

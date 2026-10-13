@@ -1,0 +1,304 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User settings, preferences and custom configurations",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID"
+        },
+        "email": {
+          "type": "string",
+          "description": "User email address"
+        },
+        "skin": {
+          "type": "string",
+          "description": "Selected UI skin theme"
+        },
+        "pairs": {
+          "type": "array",
+          "description": "Active currency pairs list"
+        },
+        "monthlyLossLimit": {
+          "type": "number",
+          "description": "Monthly maximum loss limit in dollars"
+        },
+        "tradingRules": {
+          "type": "array",
+          "description": "Trading plan rules list"
+        },
+        "dailyRoutine": {
+          "type": "array",
+          "description": "Checklist items for market preparation"
+        },
+        "pipValues": {
+          "type": "object",
+          "description": "Custom pip values per pair"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of last update"
+        }
+      },
+      "required": ["userId"]
+    },
+    "Account": {
+      "title": "Account",
+      "description": "Trading account owned by user",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Account unique ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner UID"
+        },
+        "name": {
+          "type": "string",
+          "description": "Account name",
+          "maxLength": 100
+        },
+        "startBalance": {
+          "type": "number",
+          "description": "Initial balance"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp"
+        }
+      },
+      "required": ["id", "userId", "name", "startBalance"]
+    },
+    "Trade": {
+      "title": "Trade",
+      "description": "Forex trade journal entry",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Trade ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner UID"
+        },
+        "accountId": {
+          "type": "string",
+          "description": "Associated trading account ID"
+        },
+        "date": {
+          "type": "string",
+          "description": "Date string YYYY-MM-DD"
+        },
+        "pair": {
+          "type": "string",
+          "description": "Currency pair symbol"
+        },
+        "direction": {
+          "type": "string",
+          "enum": ["buy", "sell"],
+          "description": "Trade direction"
+        },
+        "entry": {
+          "type": "number",
+          "description": "Entry price"
+        },
+        "stopLoss": {
+          "type": "number",
+          "description": "Stop loss price"
+        },
+        "takeProfit": {
+          "type": "number",
+          "description": "Take profit price"
+        },
+        "result": {
+          "type": "string",
+          "enum": ["win", "loss", "breakeven", "open"],
+          "description": "Outcome of trade"
+        },
+        "amount": {
+          "type": "number",
+          "description": "Profit or loss dollar amount"
+        },
+        "emotion": {
+          "type": "string",
+          "description": "Psychological state"
+        },
+        "followedPlan": {
+          "type": "string",
+          "enum": ["yes", "no"],
+          "description": "Whether trading plan was followed"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Lesson or notes from trade"
+        },
+        "chartImages": {
+          "type": "array",
+          "description": "Base64 compressed chart images"
+        },
+        "checkedRules": {
+          "type": "array",
+          "description": "Checklist rules adhered to"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp"
+        }
+      },
+      "required": ["id", "userId", "accountId", "date", "pair", "direction", "result"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Personal wallet transaction or transfer",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Transaction ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner UID"
+        },
+        "accountId": {
+          "type": "string",
+          "description": "Associated trading account if deposit/withdrawal"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["withdraw", "deposit", "income", "expense"],
+          "description": "Transaction category type"
+        },
+        "amount": {
+          "type": "number",
+          "description": "Transaction dollar value"
+        },
+        "category": {
+          "type": "string",
+          "description": "Category label"
+        },
+        "date": {
+          "type": "string",
+          "description": "Date string YYYY-MM-DD"
+        },
+        "note": {
+          "type": "string",
+          "description": "Memo or details"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp"
+        }
+      },
+      "required": ["id", "userId", "type", "amount", "date"]
+    },
+    "MarketNote": {
+      "title": "MarketNote",
+      "description": "Daily quick note about market conditions",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Note ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner UID"
+        },
+        "date": {
+          "type": "string",
+          "description": "Date string YYYY-MM-DD"
+        },
+        "content": {
+          "type": "string",
+          "description": "Note body text"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last edit timestamp"
+        }
+      },
+      "required": ["id", "userId", "date", "content"]
+    },
+    "TodoTask": {
+      "title": "TodoTask",
+      "description": "Trader reminder task with audio alarm and schedule",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Task ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner UID"
+        },
+        "title": {
+          "type": "string",
+          "description": "Task title"
+        },
+        "dueDate": {
+          "type": "string",
+          "description": "Target date YYYY-MM-DD"
+        },
+        "dueTime": {
+          "type": "string",
+          "description": "Target alarm time HH:mm"
+        },
+        "completed": {
+          "type": "boolean",
+          "description": "Whether task is completed"
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["sare", "dhexe", "hoose"],
+          "description": "Priority level"
+        },
+        "alarmEnabled": {
+          "type": "boolean",
+          "description": "Whether alarm chime is active"
+        },
+        "alarmTriggered": {
+          "type": "boolean",
+          "description": "Whether alarm has rung"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Created timestamp"
+        }
+      },
+      "required": ["id", "userId", "title", "dueDate", "dueTime", "completed"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile and configurations"
+    },
+    "/users/{userId}/accounts/{accountId}": {
+      "schema": "Account",
+      "description": "Trading accounts for a user"
+    },
+    "/users/{userId}/trades/{tradeId}": {
+      "schema": "Trade",
+      "description": "Journaled trades for a user"
+    },
+    "/users/{userId}/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Personal budget entries for a user"
+    },
+    "/users/{userId}/marketNotes/{noteId}": {
+      "schema": "MarketNote",
+      "description": "Quick daily market notes for a user"
+    },
+    "/users/{userId}/todos/{todoId}": {
+      "schema": "TodoTask",
+      "description": "Scheduled reminder tasks with alarm"
+    }
+  }
+}

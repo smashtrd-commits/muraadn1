@@ -1,0 +1,6 @@
+{
+  "name": "muraadn1",
+  "description": "Diiwaanka ganacsiga Forex iyo maaraynta miisaaniyadda shakhsiga ee hal ganacsade (Forex trading journal and personal budget tracker in Somali).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
